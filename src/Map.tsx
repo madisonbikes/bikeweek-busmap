@@ -7,7 +7,15 @@ import {GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
 import axios from "axios";
 import {Entity} from "./VehicleTypes";
 import {SimpleScheduler} from "./simple_scheduler";
-import {BUS_IDS, BUS_LOCATIONS, MAPS_CENTER, MAPS_CONTAINER_STYLE, MAPS_ZOOM_LEVEL, UPDATE_INTERVAL} from "./Constants";
+import {
+    BUS_IDS,
+    BUS_LOCATIONS,
+    MAPS_CENTER,
+    MAPS_CONTAINER_STYLE,
+    MAPS_MAP_ID,
+    MAPS_ZOOM_LEVEL,
+    UPDATE_INTERVAL
+} from "./Constants";
 
 export default function MapComponent(): JSX.Element {
     const [buses, setBuses] = useState<Entity[] | undefined>(undefined)
@@ -17,8 +25,8 @@ export default function MapComponent(): JSX.Element {
         const data: Entity[] = response.data.entity;
         if (data) {
             return data.filter((bus) => {
-                const id = bus.vehicle.vehicle.id
-                return BUS_IDS.includes(Number(id))
+                const id = bus.vehicle.vehicle.label
+                return BUS_IDS.includes(id)
             })
         }
         return undefined
@@ -49,6 +57,7 @@ export default function MapComponent(): JSX.Element {
     return (
         <LoadScript
             googleMapsApiKey={process.env.REACT_APP_MAPS_API_KEY!}
+            mapIds={[MAPS_MAP_ID]}
         >
             <GoogleMap
                 mapContainerStyle={MAPS_CONTAINER_STYLE}
@@ -59,7 +68,7 @@ export default function MapComponent(): JSX.Element {
                 {buses.map((m) => {
                     return <Marker key={m.id}
                                    position={{lat: m.vehicle.position.latitude, lng: m.vehicle.position.longitude}}
-                                   icon="bus.png"/>
+                    />
                 })}
             </GoogleMap>
         </LoadScript>

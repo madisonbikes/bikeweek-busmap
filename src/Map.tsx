@@ -1,32 +1,24 @@
+/*
+ * Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
+ */
+
 import React, {useEffect, useState} from 'react'
 import {GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
 import axios from "axios";
 import {Entity} from "./VehicleTypes";
 import {SimpleScheduler} from "./simple_scheduler";
-
-const containerStyle = {
-    width: '800px',
-    height: '600px'
-};
-
-const center = {
-    lat: 43.07472052243664, lng: -89.38414963667884
-};
+import {BUS_IDS, BUS_LOCATIONS, MAPS_CENTER, MAPS_CONTAINER_STYLE, MAPS_ZOOM_LEVEL, UPDATE_INTERVAL} from "./Constants";
 
 export default function MapComponent(): JSX.Element {
-    /*
-    const url = "http://transitdata.cityofmadison.com/Vehicle/VehiclePositions.json"
-     */
     const [buses, setBuses] = useState<Entity[] | undefined>(undefined)
 
     async function loadBuses() {
-        const filterIds = [1904, 12, 129]
-        const response = await axios.get("/MadisonMetroVehiclePositions.json");
+        const response = await axios.get(BUS_LOCATIONS);
         const data: Entity[] = response.data.entity;
         if (data) {
             return data.filter((bus) => {
                 const id = bus.vehicle.vehicle.id
-                return filterIds.includes(Number(id))
+                return BUS_IDS.includes(Number(id))
             })
         }
         return undefined
@@ -43,7 +35,7 @@ export default function MapComponent(): JSX.Element {
             if (!abort) {
                 setBuses(buses)
             }
-        }, 10000, 0)
+        }, UPDATE_INTERVAL, 0)
 
         // cleanup aborts load
         return () => {
@@ -59,9 +51,9 @@ export default function MapComponent(): JSX.Element {
             googleMapsApiKey={process.env.REACT_APP_MAPS_API_KEY!}
         >
             <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={10}
+                mapContainerStyle={MAPS_CONTAINER_STYLE}
+                center={MAPS_CENTER}
+                zoom={MAPS_ZOOM_LEVEL}
             >
                 { /* Child components, such as markers, info windows, etc. */}
                 {buses.map((m) => {

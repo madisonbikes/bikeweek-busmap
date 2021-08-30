@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
+ */
+
 /** simple schedule api that's easy to replace/mock with DI for testing */
 export type ScheduledFunction = (() => Promise<void>) | (() => void)
 

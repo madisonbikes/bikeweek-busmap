@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
+ */
+
 import React from 'react';
 import './App.css';
 import './Map'

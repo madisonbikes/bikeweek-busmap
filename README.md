@@ -17,3 +17,6 @@ at https://madisonbikes.org/bikeweek-busmap/. You can modify this by modifying t
 To avoid CORS restrictions that prevent React App's from loading remote resources, the bus data is loaded
 from https://madisonbikes.org/MadisonMetroVehiclePositions.json, which is updated on the server with a cron job running
 every 5 minutes.
+
+## Customization
+Look in `src/Constants.ts` for various configurable settings.

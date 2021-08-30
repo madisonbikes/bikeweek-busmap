@@ -6,7 +6,7 @@
 export const BUS_IDS = [1904, 12, 129]
 
 /* This is should be updated using cron from http://transitdata.cityofmadison.com/Vehicle/VehiclePositions.json */
-export const BUS_LOCATIONS = "/MadisonMetroVehiclePositions.json"
+export const BUS_LOCATIONS = process.env.REACT_APP_BUS_LOCATION_URI ?? "/MadisonMetroVehiclePositions.json"
 
 /** update the locations every 10 seconds */
 export const UPDATE_INTERVAL = 10000

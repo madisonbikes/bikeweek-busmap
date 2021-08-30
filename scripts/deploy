@@ -1,0 +1,2 @@
+#!/bin/sh
+rsync -a build/* mb_dreamhost:~/madisonbikes.org/bikeweek-buses

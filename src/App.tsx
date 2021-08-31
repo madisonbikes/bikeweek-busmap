@@ -4,14 +4,13 @@
 
 import React from 'react';
 import './App.css';
-import './Map'
-import Map from "./Map";
+import {MapLoader} from "./MapLoader";
 
 function App() {
     return (
         <div className="App">
             <header className="App-header">
-                <Map/>
+                <MapLoader/>
             </header>
         </div>
     );

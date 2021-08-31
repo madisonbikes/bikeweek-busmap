@@ -29,6 +29,6 @@ function getBusIdConfiguration(): string[] {
     if(configuredBusIds) {
         return JSON.parse(configuredBusIds)
     } else {
-        return ["1904", "012", "129"]
+        return ["1904", "012", "129", "2008"]
     }
 }

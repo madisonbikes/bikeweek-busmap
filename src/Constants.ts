@@ -3,7 +3,7 @@
  */
 
 /* Update these BUS IDS to reflect the buses you want to track */
-export const BUS_IDS = ["1904", "012", "129"]
+export const BUS_IDS = getBusIdConfiguration()
 
 /* This is should be updated using cron from http://transitdata.cityofmadison.com/Vehicle/VehiclePositions.json */
 export const BUS_LOCATIONS = process.env.REACT_APP_BUS_LOCATION_URI ?? "/MadisonMetroVehiclePositions.json"
@@ -23,3 +23,12 @@ export const MAPS_CONTAINER_STYLE = {
 };
 
 export const MAPS_MAP_ID = "d3aaf7eca4d37317"
+
+function getBusIdConfiguration(): string[] {
+    const configuredBusIds = process.env.REACT_APP_BUS_IDS
+    if(configuredBusIds) {
+        return JSON.parse(configuredBusIds)
+    } else {
+        return ["1904", "012", "129"]
+    }
+}

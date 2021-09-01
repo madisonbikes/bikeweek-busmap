@@ -4,56 +4,56 @@
 
 /** these types were auto-generated using https://quicktype.io/typescript, which was amazing */
 export interface VehicleData {
-    header: Header;
-    entity: Entity[];
+  header: Header;
+  entity: Entity[];
 }
 
 export interface Entity {
-    id: string;
-    is_deleted: boolean;
-    trip_update: null;
-    vehicle: EntityVehicle;
-    alert: null;
+  id: string;
+  is_deleted: boolean;
+  trip_update: null;
+  vehicle: EntityVehicle;
+  alert: null;
 }
 
 export interface EntityVehicle {
-    trip: Trip;
-    position: Position;
-    current_stop_sequence: number;
-    current_status: number;
-    timestamp: number;
-    congestion_level: number;
-    stop_id: string;
-    vehicle: VehicleVehicle;
-    occupancy_status: number;
-    occupancy_percentage: number;
+  trip: Trip;
+  position: Position;
+  current_stop_sequence: number;
+  current_status: number;
+  timestamp: number;
+  congestion_level: number;
+  stop_id: string;
+  vehicle: VehicleVehicle;
+  occupancy_status: number;
+  occupancy_percentage: number;
 }
 
 export interface Position {
-    latitude: number;
-    longitude: number;
-    bearing: number;
-    odometer: number;
-    speed: number;
+  latitude: number;
+  longitude: number;
+  bearing: number;
+  odometer: number;
+  speed: number;
 }
 
 export interface Trip {
-    trip_id: string;
-    start_time: string;
-    start_date: string;
-    schedule_relationship: number;
-    route_id: string;
-    direction_id: number;
+  trip_id: string;
+  start_time: string;
+  start_date: string;
+  schedule_relationship: number;
+  route_id: string;
+  direction_id: number;
 }
 
 export interface VehicleVehicle {
-    id: string;
-    label: string;
-    license_plate: string;
+  id: string;
+  label: string;
+  license_plate: string;
 }
 
 export interface Header {
-    gtfs_realtime_version: string;
-    incrementality: number;
-    timestamp: number;
+  gtfs_realtime_version: string;
+  incrementality: number;
+  timestamp: number;
 }

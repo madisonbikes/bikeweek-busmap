@@ -20,7 +20,15 @@
     "web-vitals": "^2.1.0"
   },
   "devDependencies": {
-    "@types/google.maps": "^3.45.6"
+    "@types/google.maps": "^3.45.6",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-no-autofix": "^1.1.2",
+    "eslint-plugin-react": "^7.25.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "2.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -28,12 +36,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "scripts/deploy"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

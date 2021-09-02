@@ -18,6 +18,7 @@ axios.defaults.headers = {
 
 export function MapLoader(): JSX.Element {
   const [buses, setBuses] = useState<Entity[] | undefined>(undefined);
+  const [selectedBus, setSelectedBus] = useState<Entity | undefined>(undefined);
 
   async function loadBuses() {
     const response = await axios.get(BUS_LOCATIONS);
@@ -50,16 +51,12 @@ export function MapLoader(): JSX.Element {
       abort = true;
     };
   }, []);
+  return <LoadScript
+    googleMapsApiKey={process.env.REACT_APP_MAPS_API_KEY ?? ""}
+    mapIds={[MAPS_MAP_ID]}>
+    {buses &&
+    <Map buses={buses} selectedBus={selectedBus} handleSetSelectedBus={setSelectedBus} />
+    }
+  </LoadScript>;
 
-  if (buses) {
-    return <LoadScript
-      googleMapsApiKey={process.env.REACT_APP_MAPS_API_KEY!}
-      mapIds={[MAPS_MAP_ID]}
-    >
-      <Map buses={buses} /></LoadScript>;
-  } else {
-    return <LoadScript
-      googleMapsApiKey={process.env.REACT_APP_MAPS_API_KEY!}
-      mapIds={[MAPS_MAP_ID]} />;
-  }
 }

@@ -1,41 +1,42 @@
 {
   "name": "bikeweek-busmap",
-  "version": "0.1.0",
+  "version": "v2022",
   "private": true,
   "homepage": "https://madisonbikes.org/bikeweek-buses",
   "dependencies": {
-    "@react-google-maps/api": "^2.2.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^12.1.5",
-    "@testing-library/user-event": "^13.2.1",
+    "@react-google-maps/api": "^2.11.8",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
+    "@testing-library/user-event": "^14.2.0",
     "@types/jest": "^27.5.1",
-    "@types/node": "^14.17.12",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "axios": "^0.21.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "@types/node": "^17.0.35",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "axios": "^0.27.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@types/google.maps": "^3.49.0",
-    "@typescript-eslint/eslint-plugin": "^4.29.3",
-    "@typescript-eslint/parser": "^4.29.3",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-no-autofix": "^1.2.3",
-    "eslint-plugin-react": "^7.25.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "prettier": "2.3.2"
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.5.0",
+    "prettier": "2.6.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "scripts/deploy"
+    "deploy": "scripts/deploy",
+    "check-package-updates": "npx npm-check-updates"
   },
   "browserslist": {
     "production": [

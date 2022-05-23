@@ -26,13 +26,8 @@ export const MAPS_CONTAINER_STYLE = {
 export const MAPS_MAP_ID = "d3aaf7eca4d37317";
 
 function getBusIdConfiguration(): string[] {
-  const configuredBusIds = process.env.REACT_APP_BUS_IDS;
-  let retval: string[];
-  if (configuredBusIds) {
-    retval = JSON.parse(configuredBusIds);
-  } else {
-    retval = ["1904", "012", "129", "2008"];
-  }
+  const configuredBusIds = process.env.REACT_APP_BUS_IDS ?? "[]";
+  const retval: string[] = JSON.parse(configuredBusIds);
   console.log(`Using bus ids ${retval}`);
   return retval;
 }

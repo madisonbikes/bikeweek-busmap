@@ -3,7 +3,6 @@
  */
 
 import { useEffect, useState } from "react";
-import { LoadScript } from "@react-google-maps/api";
 import axios from "axios";
 import { Entity } from "./VehicleTypes";
 import { SimpleScheduler } from "./simple_scheduler";
@@ -15,6 +14,7 @@ import {
 } from "./Constants";
 import { Map } from "./Map";
 import devBusData from "./data/dev_bus_data.json";
+import { useLoadScript } from "@react-google-maps/api";
 
 axios.defaults.headers.common = {
   "Cache-Control": "no-cache",
@@ -22,7 +22,12 @@ axios.defaults.headers.common = {
   Expires: "0",
 };
 
-export function MapLoader(): JSX.Element {
+export const MapLoader = () => {
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY ?? "",
+    mapIds: [MAPS_MAP_ID],
+  });
+
   const [buses, setBuses] = useState<Entity[] | undefined>(undefined);
   const [selectedBus, setSelectedBus] = useState<Entity | undefined>(undefined);
 
@@ -46,16 +51,17 @@ export function MapLoader(): JSX.Element {
   }
 
   useEffect(() => {
+    if (!isLoaded) return;
+
     const scheduler = new SimpleScheduler();
     // use flag to avoid setting state if component unmounts (unlikely)
     let abort = false;
 
     const cancel = scheduler.scheduleRepeat(
       async () => {
-        console.log("loading buses");
         const buses = await loadBuses();
         if (!abort) {
-          console.log(`loaded ${buses?.length} buses`);
+          console.log(`loaded position data for ${buses?.length} buses`);
           setBuses(buses);
         }
       },
@@ -68,19 +74,22 @@ export function MapLoader(): JSX.Element {
       cancel.cancel();
       abort = true;
     };
-  }, []);
+  }, [isLoaded]);
+
+  if (loadError) {
+    console.log(loadError);
+    return <></>;
+  }
+
+  if (!buses || !isLoaded) {
+    return <></>;
+  }
+
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.REACT_APP_MAPS_API_KEY ?? ""}
-      mapIds={[MAPS_MAP_ID]}
-    >
-      {buses && (
-        <Map
-          buses={buses}
-          selectedBus={selectedBus}
-          handleSetSelectedBus={setSelectedBus}
-        />
-      )}
-    </LoadScript>
+    <Map
+      buses={buses}
+      selectedBus={selectedBus}
+      handleSetSelectedBus={setSelectedBus}
+    />
   );
-}
+};

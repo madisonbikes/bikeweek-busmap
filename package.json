@@ -36,7 +36,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "scripts/deploy",
-    "check-package-updates": "npx npm-check-updates"
+    "check-package-updates": "npx npm-check-updates",
+    "lint": "eslint 'src/**'"
   },
   "browserslist": {
     "production": [

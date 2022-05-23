@@ -4,7 +4,6 @@
 
 import { GoogleMap, InfoWindow, Marker } from "@react-google-maps/api";
 import { MAPS_CENTER, MAPS_CONTAINER_STYLE, MAPS_ZOOM_LEVEL } from "./Constants";
-import React from "react";
 import { Entity } from "./VehicleTypes";
 import routes from "./data/routes.json"
 

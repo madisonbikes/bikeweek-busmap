@@ -1,7 +1,9 @@
 # Madison Bike Week Bus Map
 
 React app the loads the Madison Metro bus status (nominally
-from http://transitdata.cityofmadison.com/Vehicle/VehiclePositions.json) and shows where our bus week ad buses are.
+from http://transitdata.cityofmadison.com/Vehicle/VehiclePositions.json) and shows where our bus week ad buses are. This data is expected to change minute-to-minute.
+
+At this time, route data is manually preloaded from http://transitdata.cityofmadison.com/GTFS/mmt_gtfs.zip and must be extracted/updated periodically in the data/routes.json file. The data is provided in CSV, which can be converted to JSON here: https://csvjson.com/csv2json. This data changes relatively infrequently.
 
 ## Running/Building
 
@@ -19,4 +21,5 @@ from https://madisonbikes.org/MadisonMetroVehiclePositions.json, which is update
 every 5 minutes.
 
 ## Customization
+
 Look in `src/Constants.ts` for various configurable settings.

@@ -2,21 +2,25 @@ import { Entity } from "./VehicleTypes";
 import routes from "./data/routes.json";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 
-function lookupRoute(bus: Entity) {
+const lookupRoute = (bus: Entity) => {
   return routes.find(
     (value) => value.route_id.toString() === bus.vehicle.trip.route_id
   );
-}
+};
 
-function lookupRouteLabel(bus: Entity) {
+const lookupRouteLabel = (bus: Entity) => {
   return lookupRoute(bus)?.route_short_name;
-}
+};
 
-function lookupRouteColor(bus: Entity) {
+const lookupRouteColor = (bus: Entity) => {
   const color = lookupRoute(bus)?.route_color;
   if (!color) return "blue";
   else return `#${color}`;
-}
+};
+
+const lookupRouteServiceName = (bus: Entity) => {
+  return lookupRoute(bus)?.route_service_name;
+};
 
 type Props = {
   bus: Entity;
@@ -46,6 +50,7 @@ export const BusMarker = ({
             <br />
             Route: {lookupRouteLabel(bus)}
             <br />
+            {lookupRouteServiceName(bus)}
           </div>
         </InfoWindow>
       )}

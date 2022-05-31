@@ -13,7 +13,7 @@ import {
   UPDATE_INTERVAL,
 } from "./Constants";
 import { Map } from "./Map";
-import devBusData from "./data/dev_bus_data.json";
+import devBusData from "./data/VehiclePositions.json";
 import { useLoadScript } from "@react-google-maps/api";
 
 axios.defaults.headers.common = {

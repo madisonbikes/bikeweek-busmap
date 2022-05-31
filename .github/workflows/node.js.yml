@@ -8,6 +8,10 @@ name: Node.js CI
 on:
   push:
     branches: [main]
+env:
+  REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+  REACT_APP_BUS_IDS: "[129]"
+  REACT_APP_BUS_LOCATION_URI: /MadisonMetroVehiclePositions.json
 
 jobs:
   build:

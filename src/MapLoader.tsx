@@ -38,6 +38,7 @@ export const MapLoader = () => {
       console.log("loading bus data from static development source");
       data = devBusData.entity;
     } else {
+      console.log(`loading bus data from ${BUS_LOCATIONS}`);
       const response = await axios.get(BUS_LOCATIONS);
       data = response.data.entity;
     }

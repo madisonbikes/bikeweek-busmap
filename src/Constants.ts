@@ -28,6 +28,6 @@ export const MAPS_MAP_ID = "d3aaf7eca4d37317";
 function getBusIdConfiguration(): string[] {
   const configuredBusIds = process.env.REACT_APP_BUS_IDS ?? "[]";
   const retval: string[] = JSON.parse(configuredBusIds);
-  console.log(`Using bus ids ${retval}`);
+  console.log(`Using bus ids ${JSON.stringify(retval)}`);
   return retval;
 }

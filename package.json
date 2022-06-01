@@ -21,7 +21,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@types/google.maps": "^3.49.0",
+    "@types/google.maps": "^3.49.1",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "eslint": "^8.16.0",

@@ -4,11 +4,8 @@
 
 import { GoogleMap } from "@react-google-maps/api";
 import { BusMarker } from "./BusMarker";
-import {
-  Configuration,
-  MAPS_CONTAINER_STYLE,
-  MAPS_ZOOM_LEVEL,
-} from "./Constants";
+import { Configuration } from "./Configuration";
+import { MAPS_CONTAINER_STYLE, MAPS_ZOOM_LEVEL } from "./Constants";
 import { Entity } from "./VehicleTypes";
 
 type Props = {

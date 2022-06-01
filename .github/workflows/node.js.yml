@@ -3,15 +3,14 @@
 
 # In addition, it will deploy the built web app to a remote server via SSH.
 
-name: Node.js CI
+name: Node.js Build and Deploy
 
 on:
   push:
     branches: [main]
 env:
   REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
-  REACT_APP_BUS_IDS: "[129]"
-  REACT_APP_BUS_LOCATION_URI: "/MadisonMetroVehiclePositions.json"
+  REACT_APP_CONFIGURATION_URL: "/busmapConfiguration.json"
 
 jobs:
   build:

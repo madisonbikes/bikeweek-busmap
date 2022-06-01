@@ -6,15 +6,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Entity } from "./VehicleTypes";
 import { SimpleScheduler } from "./simple_scheduler";
-import {
-  BUS_IDS,
-  BUS_LOCATIONS,
-  MAPS_MAP_ID,
-  UPDATE_INTERVAL,
-} from "./Constants";
 import { Map } from "./Map";
+import { MAP_IDS } from "./Constants";
 import devBusData from "./data/VehiclePositions.json";
 import { useLoadScript } from "@react-google-maps/api";
+import * as yup from "yup";
+import { Configuration, getConfiguration } from "./Configuration";
 
 axios.defaults.headers.common = {
   "Cache-Control": "no-cache",
@@ -25,34 +22,49 @@ axios.defaults.headers.common = {
 export const MapLoader = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY ?? "",
-    mapIds: [MAPS_MAP_ID],
+    mapIds: MAP_IDS,
   });
-
+  const [configuration, setConfiguration] = useState<Configuration | undefined>(
+    undefined
+  );
   const [buses, setBuses] = useState<Entity[] | undefined>(undefined);
   const [selectedBus, setSelectedBus] = useState<Entity | undefined>(undefined);
 
-  async function loadBuses() {
-    let data: Entity[];
-
-    if (!BUS_LOCATIONS) {
-      console.log("loading bus data from static development source");
-      data = devBusData.entity;
-    } else {
-      console.log(`loading bus data from ${BUS_LOCATIONS}`);
-      const response = await axios.get(BUS_LOCATIONS);
-      data = response.data.entity;
-    }
-    if (data) {
-      return data.filter((bus) => {
-        const id = bus.vehicle.vehicle.label;
-        return BUS_IDS.includes(id);
-      });
-    }
-    return undefined;
-  }
+  useEffect(() => {
+    const lgc = async () => {
+      const c = await getConfiguration();
+      console.log(`Using configuration ${JSON.stringify(c)}`);
+      setConfiguration(c);
+    };
+    lgc();
+  }, []);
 
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || !configuration) return;
+
+    async function loadBuses() {
+      let data: Entity[];
+      if (!configuration) return undefined;
+
+      if (!configuration.busLocationUri) {
+        console.log("loading bus data from static development source");
+        data = devBusData.entity;
+      } else {
+        console.log(`loading bus data from ${configuration.busLocationUri}`);
+        const response = await axios.get(configuration.busLocationUri);
+        data = response.data.entity;
+      }
+      if (data) {
+        return data.filter((bus) => {
+          const id = yup
+            .string()
+            .required()
+            .validateSync(bus.vehicle.vehicle.label);
+          return configuration.busIds.includes(id);
+        });
+      }
+      return undefined;
+    }
 
     const scheduler = new SimpleScheduler();
     // use flag to avoid setting state if component unmounts (unlikely)
@@ -66,7 +78,7 @@ export const MapLoader = () => {
           setBuses(buses);
         }
       },
-      UPDATE_INTERVAL,
+      configuration.updateInterval,
       0
     );
 
@@ -75,19 +87,20 @@ export const MapLoader = () => {
       cancel.cancel();
       abort = true;
     };
-  }, [isLoaded]);
+  }, [isLoaded, configuration]);
 
   if (loadError) {
     console.log(loadError);
     return <></>;
   }
 
-  if (!buses || !isLoaded) {
+  if (!buses || !isLoaded || !configuration) {
     return <></>;
   }
 
   return (
     <Map
+      configuration={configuration}
       buses={buses}
       selectedBus={selectedBus}
       handleSetSelectedBus={setSelectedBus}

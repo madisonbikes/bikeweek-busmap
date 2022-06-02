@@ -7,7 +7,7 @@ const configurationSchema = yup.object({
   mapCenter: yup
     .object({ lat: yup.number().required(), lng: yup.number().required() })
     .default({ lat: 43.07472052243664, lng: -89.38414963667884 }),
-  updateInterval: yup.number().default(10000).required(),
+  updateInterval: yup.number().default(10).required(),
   initialZoomLevel: yup.number().default(11.7).required(),
 
   // This is should be updated using cron from http://transitdata.cityofmadison.com/Vehicle/VehiclePositions.json

@@ -78,7 +78,7 @@ export const MapLoader = () => {
           setBuses(buses);
         }
       },
-      configuration.updateInterval,
+      configuration.updateInterval * 1000,
       0
     );
 

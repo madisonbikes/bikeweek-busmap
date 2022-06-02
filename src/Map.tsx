@@ -5,7 +5,7 @@
 import { GoogleMap } from "@react-google-maps/api";
 import { BusMarker } from "./BusMarker";
 import { Configuration } from "./Configuration";
-import { MAPS_CONTAINER_STYLE, MAPS_ZOOM_LEVEL } from "./Constants";
+import { MAPS_CONTAINER_STYLE } from "./Constants";
 import { Entity } from "./VehicleTypes";
 
 type Props = {
@@ -26,7 +26,7 @@ export function Map({
       id="bikeweek-busmap"
       mapContainerStyle={MAPS_CONTAINER_STYLE}
       center={configuration.mapCenter}
-      zoom={MAPS_ZOOM_LEVEL}
+      zoom={configuration.initialZoomLevel}
       onClick={() => {
         handleSetSelectedBus(undefined);
       }}

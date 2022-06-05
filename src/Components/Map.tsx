@@ -4,22 +4,22 @@
 
 import { GoogleMap } from "@react-google-maps/api";
 import { BusMarker } from "./BusMarker";
-import { Configuration } from "./Configuration";
-import { MAPS_CONTAINER_STYLE } from "./Constants";
-import { Entity } from "./VehicleTypes";
+import { Configuration } from "../Configuration";
+import { MAPS_CONTAINER_STYLE } from "../Constants";
+import { Entity } from "../VehicleTypes";
 
 type Props = {
   configuration: Configuration;
   buses: Entity[];
   selectedBus: Entity | undefined;
-  handleSetSelectedBus: (bus: Entity | undefined) => void;
+  setSelectedBus: (bus: Entity | undefined) => void;
 };
 
 export function Map({
   configuration,
   buses,
   selectedBus,
-  handleSetSelectedBus,
+  setSelectedBus,
 }: Props) {
   return (
     <GoogleMap
@@ -28,7 +28,7 @@ export function Map({
       center={configuration.mapCenter}
       zoom={configuration.initialZoomLevel}
       onClick={() => {
-        handleSetSelectedBus(undefined);
+        setSelectedBus(undefined);
       }}
     >
       {/* Child components, such as markers, info windows, etc. */}
@@ -38,7 +38,7 @@ export function Map({
             key={bus.id}
             bus={bus}
             selectedBus={selectedBus}
-            handleSetSelectedBus={handleSetSelectedBus}
+            setSelectedBus={setSelectedBus}
           />
         );
       })}

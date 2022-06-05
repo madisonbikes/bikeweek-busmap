@@ -1,5 +1,5 @@
-import { Entity } from "./VehicleTypes";
-import routes from "./data/routes.json";
+import { Entity } from "../VehicleTypes";
+import routes from "../data/routes.json";
 import { InfoWindow, Marker } from "@react-google-maps/api";
 
 const lookupRoute = (bus: Entity) => {
@@ -25,20 +25,20 @@ const lookupRouteServiceName = (bus: Entity) => {
 type BusMarkerProps = {
   bus: Entity;
   selectedBus: Entity | undefined;
-  handleSetSelectedBus: (bus: Entity | undefined) => void;
+  setSelectedBus: (bus: Entity | undefined) => void;
 };
 
 export const BusMarker = ({
   bus,
   selectedBus,
-  handleSetSelectedBus,
+  setSelectedBus,
 }: BusMarkerProps) => {
   const busColor = lookupRouteColor(bus);
 
   return (
     <>
       {bus.id === selectedBus?.id && (
-        <BusInfoWindow bus={bus} handleSetSelectedBus={handleSetSelectedBus} />
+        <BusInfoWindow bus={bus} setSelectedBus={setSelectedBus} />
       )}
       <Marker
         position={{
@@ -55,7 +55,7 @@ export const BusMarker = ({
           anchor: new google.maps.Point(20, 20),
           rotation: bus.vehicle.position.bearing,
         }}
-        onClick={() => handleSetSelectedBus(bus)}
+        onClick={() => setSelectedBus(bus)}
       />
     </>
   );
@@ -63,10 +63,10 @@ export const BusMarker = ({
 
 type BusInfoWindowProps = {
   bus: Entity;
-  handleSetSelectedBus: (bus: Entity | undefined) => void;
+  setSelectedBus: (bus: Entity | undefined) => void;
 };
 
-const BusInfoWindow = ({ bus, handleSetSelectedBus }: BusInfoWindowProps) => {
+const BusInfoWindow = ({ bus, setSelectedBus }: BusInfoWindowProps) => {
   const routeLabel = lookupRouteLabel(bus);
   const routeServiceName = lookupRouteServiceName(bus);
   return (
@@ -76,7 +76,7 @@ const BusInfoWindow = ({ bus, handleSetSelectedBus }: BusInfoWindowProps) => {
         lat: bus.vehicle.position.latitude,
         lng: bus.vehicle.position.longitude,
       }}
-      onCloseClick={() => handleSetSelectedBus(bus)}
+      onCloseClick={() => setSelectedBus(bus)}
     >
       <div>
         {routeLabel && (

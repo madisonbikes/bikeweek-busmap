@@ -99,13 +99,13 @@ export const MapLoader = () => {
   }
 
   let busList = "";
-  for (const b of buses) {
+  for (const b of configuration.busIds) {
     if (busList.length > 0) {
       busList += ", ";
     } else {
       busList += "Tracking Bus Numbers ";
     }
-    busList += b.vehicle.vehicle.label;
+    busList += `${b}`;
   }
 
   return (

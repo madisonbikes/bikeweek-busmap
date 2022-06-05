@@ -98,12 +98,39 @@ export const MapLoader = () => {
     return <></>;
   }
 
+  let busList = "";
+  for (const b of buses) {
+    if (busList.length > 0) {
+      busList += ", ";
+    } else {
+      busList += "Tracking Bus Numbers ";
+    }
+    busList += b.vehicle.vehicle.label;
+  }
+
   return (
-    <Map
-      configuration={configuration}
-      buses={buses}
-      selectedBus={selectedBus}
-      handleSetSelectedBus={setSelectedBus}
-    />
+    <>
+      <div className="Map">
+        <Map
+          configuration={configuration}
+          buses={buses}
+          selectedBus={selectedBus}
+          handleSetSelectedBus={setSelectedBus}
+        />
+      </div>
+      <div className="Info">
+        <div>{busList}</div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div>
+          <a
+            href="https://github.com/madisonbikes/bikeweek-busmap"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Github Code
+          </a>
+        </div>
+      </div>
+    </>
   );
 };

@@ -19,11 +19,18 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 6,
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
   plugins: ["@typescript-eslint"],
   settings: {
     react: {
       version: "detect",
     },
+  },
+  reportUnusedDisableDirectives: true,
+  rules: {
+    eqeqeq: ["warn", "smart"],
   },
 };

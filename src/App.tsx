@@ -8,6 +8,7 @@ import { MapLoader } from "./MapLoader";
 function App(): JSX.Element {
   return (
     <div className="App">
+      <h3>Bike Week 2022 Bus Map</h3>
       <MapLoader />
     </div>
   );

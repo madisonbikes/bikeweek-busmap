@@ -2,15 +2,11 @@
  * Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
  */
 
-import React from "react";
 import "./index.css";
-import App from "./App";
 import { createRoot } from "react-dom/client";
+import { App } from "./App";
 
 const container = document.getElementById("root") as HTMLElement;
 const root = createRoot(container);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// FIXME enable <StrictMode></StrictMode> eventually, which doesn't work any more w/React 18. Markers don't show consistently on map.
+root.render(<App />);

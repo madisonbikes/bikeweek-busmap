@@ -7,7 +7,7 @@ import { MAP_IDS } from "../Constants";
 import { useLoadScript } from "@react-google-maps/api";
 import { Configuration } from "../Configuration";
 import { Entity } from "../VehicleTypes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Props = {
   configuration: Configuration;
@@ -16,19 +16,13 @@ type Props = {
 
 export const MapLoader = ({ configuration, buses }: Props) => {
   const [selectedBus, setSelectedBus] = useState<Entity | undefined>(undefined);
-  const [ready, setReady] = useState(false);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY ?? "",
     mapIds: MAP_IDS,
   });
 
-  useEffect(() => {
-    console.log("force rerender");
-    setReady(true);
-  }, [isLoaded]);
-
-  if (!isLoaded || !ready) {
+  if (!isLoaded) {
     return <></>;
   }
 

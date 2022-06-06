@@ -17,15 +17,15 @@ const configurationSchema = yup.object({
 export type Configuration = yup.InferType<typeof configurationSchema>;
 
 export const getConfiguration = async (): Promise<Configuration> => {
-  if (process.env.REACT_APP_CONFIGURATION_URL) {
-    const urlConfig = await axios.get(process.env.REACT_APP_CONFIGURATION_URL);
-    return configurationSchema.validate(urlConfig.data);
-  } else if (process.env.REACT_APP_CONFIGURATION) {
+  if (process.env.REACT_APP_CONFIGURATION) {
     const envConfig = JSON.parse(process.env.REACT_APP_CONFIGURATION);
     return configurationSchema.validate(envConfig);
+  } else if (process.env.REACT_APP_CONFIGURATION_URL) {
+    const urlConfig = await axios.get(process.env.REACT_APP_CONFIGURATION_URL);
+    return configurationSchema.validate(urlConfig.data);
   } else {
     throw Error(
-      "Either REACT_APP_CONFIGURATION_URL or REACT_APP_CONFIGURATION environmnet variable must be defined"
+      "Either REACT_APP_CONFIGURATION or REACT_APP_CONFIGURATION_URL environmnet variable must be defined"
     );
   }
 };

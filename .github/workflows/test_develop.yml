@@ -3,9 +3,6 @@ name: Build and Test on 'develop'
 on:
   push:
     branches: [develop]
-env:
-  REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
-  REACT_APP_CONFIGURATION_URL: "/busmapConfiguration.json"
 
 jobs:
   build:

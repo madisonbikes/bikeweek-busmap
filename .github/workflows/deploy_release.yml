@@ -7,9 +7,6 @@ name: Build and Deploy
 on:
   release:
     types: [published]
-env:
-  REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
-  REACT_APP_CONFIGURATION_URL: "/busmapConfiguration.json"
 
 jobs:
   build:
@@ -29,7 +26,12 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run build
+        env:
+          REACT_APP_CONFIGURATION_URL: "/busmapConfiguration.json"
+          REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
       - run: npm run test
+        env:
+          REACT_APP_CONFIGURATION: '{"busIds": ["931", "988"]}'
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:

@@ -15,12 +15,12 @@ type Props = {
   setSelectedBus: (bus: Entity | undefined) => void;
 };
 
-export function Map({
+export const Map = ({
   configuration,
   buses,
   selectedBus,
   setSelectedBus,
-}: Props) {
+}: Props) => {
   return (
     <GoogleMap
       id="bikeweek-busmap"
@@ -44,4 +44,4 @@ export function Map({
       })}
     </GoogleMap>
   );
-}
+};

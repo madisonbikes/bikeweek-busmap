@@ -37,7 +37,7 @@ export const App = () => {
   useEffect(() => {
     if (!configuration) return;
 
-    async function loadBuses() {
+    const loadBuses = async () => {
       let data: Entity[];
       if (!configuration) return undefined;
 
@@ -59,7 +59,7 @@ export const App = () => {
         });
       }
       return undefined;
-    }
+    };
 
     const scheduler = new SimpleScheduler();
     // use flag to avoid setting state if component unmounts (unlikely)

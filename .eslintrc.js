@@ -23,7 +23,7 @@ module.exports = {
       jsx: true,
     },
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "testing-library"],
   settings: {
     react: {
       version: "detect",
@@ -32,5 +32,6 @@ module.exports = {
   reportUnusedDisableDirectives: true,
   rules: {
     eqeqeq: ["warn", "smart"],
+    "func-style": ["warn"],
   },
 };

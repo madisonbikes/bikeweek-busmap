@@ -1,6 +1,0 @@
-#!/bin/sh
-#
-# Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
-#
-
-rsync -a -v --delete --exclude=.* build/ mb_dreamhost:~/madisonbikes.org/bikeweek-buses/

@@ -2,23 +2,45 @@
  * Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
  */
 
-.App {
+H1 {
+  align-self: center;
+}
+
+.Root {
   background-color: #282c34;
   color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.App {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-self: center;
 }
 
 .Map {
   text-align: center;
   color: black;
+  font-size: calc(10px + 2vmin);
 }
 
 .Footer {
+  padding: 1rem;
   display: flex;
   font-size: small;
+}
+
+.FooterBusList {
+  flex-grow: 1;
+}
+
+a:link {
+  text-decoration: none;
+  color: lightblue;
+}
+a:visited {
+  color: lightblue;
 }

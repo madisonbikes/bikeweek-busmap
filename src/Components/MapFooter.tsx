@@ -16,15 +16,14 @@ export const MapFooter = ({ configuration }: Props) => {
   }
   return (
     <div className="Footer">
-      <div>{busList}</div>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div className="FooterBusList">{busList}</div>
       <div>
         <a
           href="https://github.com/madisonbikes/bikeweek-busmap"
           target="_blank"
           rel="noreferrer"
         >
-          Github Code
+          Github
         </a>
       </div>
     </div>

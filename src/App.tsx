@@ -89,10 +89,12 @@ export const App = () => {
   }
 
   return (
-    <div className="App">
-      <h3>Bike Week 2022 Bus Map</h3>
-      <MapLoader configuration={configuration} buses={buses} />
-      <MapFooter configuration={configuration} />
+    <div className="Root">
+      <div className="App">
+        <h1>Bike Week 2022 Bus Map</h1>
+        <MapLoader configuration={configuration} buses={buses} />
+        <MapFooter configuration={configuration} />
+      </div>
     </div>
   );
 };

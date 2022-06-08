@@ -29,6 +29,7 @@ jobs:
         env:
           REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
       - run: npm run test
+      - run: npm run lint
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:

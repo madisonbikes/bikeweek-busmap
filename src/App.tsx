@@ -33,7 +33,9 @@ export const App = () => {
       console.log(`Using configuration ${JSON.stringify(c)}`);
       setConfiguration(c);
     };
-    lgc();
+    // this triggers to async block above. seems weird.
+    // the void is an indicator to lint that we know we're not awaiting the promise.
+    void lgc();
   }, [configuration]);
 
   useEffect(() => {

@@ -1,5 +1,6 @@
-**/*.test.ts
 **/*.css
 **/*.svg
+**/*.json
 node_modules
 dist
+.eslintrc.js

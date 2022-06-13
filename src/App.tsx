@@ -7,7 +7,7 @@ import { MapLoader } from "./Components/MapLoader";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Entity } from "./VehicleTypes";
-import { SimpleScheduler } from "./utils/simple_scheduler";
+import { scheduleRepeat } from "./utils/simple_scheduler";
 import devBusData from "./data/VehiclePositions.json";
 import * as yup from "yup";
 import { Configuration, getConfiguration } from "./Configuration";
@@ -26,13 +26,15 @@ export const App = () => {
   const [buses, setBuses] = useState<Entity[] | undefined>(undefined);
 
   useEffect(() => {
+    if (configuration) return;
+
     const lgc = async () => {
       const c = await getConfiguration();
       console.log(`Using configuration ${JSON.stringify(c)}`);
       setConfiguration(c);
     };
     lgc();
-  }, []);
+  }, [configuration]);
 
   useEffect(() => {
     if (!configuration) return;
@@ -61,11 +63,9 @@ export const App = () => {
       return undefined;
     };
 
-    const scheduler = new SimpleScheduler();
     // use flag to avoid setting state if component unmounts (unlikely)
     let abort = false;
-
-    const cancel = scheduler.scheduleRepeat(
+    const canceller = scheduleRepeat(
       async () => {
         const buses = await loadBuses();
         if (!abort) {
@@ -73,13 +73,15 @@ export const App = () => {
           setBuses(buses);
         }
       },
-      configuration.updateInterval * 1000,
-      0
+      {
+        intervalInMillis: configuration.updateInterval * 1000,
+        delayInMillis: 0,
+      }
     );
 
     // cleanup aborts load
     return () => {
-      cancel.cancel();
+      canceller.cancel();
       abort = true;
     };
   }, [configuration]);

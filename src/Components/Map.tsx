@@ -2,46 +2,31 @@
  * Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
  */
 
-import { GoogleMap } from "@react-google-maps/api";
 import { BusMarker } from "./BusMarker";
 import { Configuration } from "../Configuration";
-import { MAPS_CONTAINER_STYLE } from "../Constants";
-import { Entity } from "../VehicleTypes";
+import { Entity } from "../data/VehicleTypes";
+import { MapContainer, TileLayer } from "react-leaflet";
 
 type Props = {
   configuration: Configuration;
   buses: Entity[];
-  selectedBus: Entity | undefined;
-  setSelectedBus: (bus: Entity | undefined) => void;
 };
 
-export const Map = ({
-  configuration,
-  buses,
-  selectedBus,
-  setSelectedBus,
-}: Props) => {
+export const Map = ({ configuration, buses }: Props) => {
   return (
-    <GoogleMap
+    <MapContainer
       id="bikeweek-busmap"
-      mapContainerStyle={MAPS_CONTAINER_STYLE}
       center={configuration.mapCenter}
       zoom={configuration.initialZoomLevel}
-      onClick={() => {
-        setSelectedBus(undefined);
-      }}
     >
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
       {/* Child components, such as markers, info windows, etc. */}
       {buses.map((bus) => {
-        return (
-          <BusMarker
-            key={bus.id}
-            bus={bus}
-            selectedBus={selectedBus}
-            setSelectedBus={setSelectedBus}
-          />
-        );
+        return <BusMarker key={bus.id} bus={bus} />;
       })}
-    </GoogleMap>
+    </MapContainer>
   );
 };

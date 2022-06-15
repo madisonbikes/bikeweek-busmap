@@ -14,6 +14,14 @@ H1 {
   align-self: center;
 }
 
+#bikeweek-busmap {
+  height: 600px;
+  width: 800px;
+}
+
+#busicon {
+}
+
 .App {
   min-height: 100vh;
   display: flex;
@@ -25,6 +33,10 @@ H1 {
   text-align: center;
   color: black;
   font-size: calc(10px + 2vmin);
+}
+
+#bus-marker {
+  text-align: center;
 }
 
 .Footer {

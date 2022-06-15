@@ -23,7 +23,7 @@ export const MapFooter = ({ configuration }: Props) => {
           target="_blank"
           rel="noreferrer"
         >
-          Github
+          Fork me on Github
         </a>
       </div>
     </div>

@@ -1,6 +1,7 @@
 **/*.css
 **/*.svg
 **/*.json
+**/*.png
 node_modules
 dist
 .eslintrc.js

@@ -4,4 +4,4 @@
 **/*.png
 node_modules
 dist
-*.js
+.*

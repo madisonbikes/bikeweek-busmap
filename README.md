@@ -7,7 +7,8 @@ At this time, route data is manually preloaded from http://transitdata.cityofmad
 
 ## Releasing
 
-Releases will start at 0.4 moving forward and will (?) follow semantic versioning. Maybe. :)
+Releases will start at 0.4 moving forward and will (?) follow semantic versioning.
+0.3 was used for 2022 bike week.
 
 ## Running/Building
 

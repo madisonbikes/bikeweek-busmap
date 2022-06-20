@@ -5,6 +5,8 @@ from http://transitdata.cityofmadison.com/Vehicle/VehiclePositions.json) and sho
 
 At this time, route data is manually preloaded from http://transitdata.cityofmadison.com/GTFS/mmt_gtfs.zip and must be extracted/updated periodically in the `data/routes.json` file. The data is provided in CSV, which can be converted to JSON here: https://csvjson.com/csv2json. This data changes relatively infrequently so for our purposes, once per season.
 
+## Releasing
+
 ## Running/Building
 
 You also need to supply either `REACT_APP_CONFIGURATION`, which accepts an inline JSON object or `REACT_APP_CONFIGURATION_URI` which takes a relative link to a JSON configuration file. The information in this file is not considered sensitive, so should be placed on your web server next to the app deployment.

@@ -5,19 +5,11 @@
 import "./App.css";
 import { MapLoader } from "./Components/MapLoader";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { Entity } from "./VehicleTypes";
-import { SimpleScheduler } from "./utils/simple_scheduler";
-import devBusData from "./data/VehiclePositions.json";
-import * as yup from "yup";
+import { Entity } from "./api/Types";
+import { scheduleRepeat } from "./utils/simple_scheduler";
 import { Configuration, getConfiguration } from "./Configuration";
 import { MapFooter } from "./Components/MapFooter";
-
-axios.defaults.headers.common = {
-  "Cache-Control": "no-cache",
-  Pragma: "no-cache",
-  Expires: "0",
-};
+import { loadBuses } from "./api/Vehicles";
 
 export const App = () => {
   const [configuration, setConfiguration] = useState<Configuration | undefined>(
@@ -26,60 +18,40 @@ export const App = () => {
   const [buses, setBuses] = useState<Entity[] | undefined>(undefined);
 
   useEffect(() => {
+    if (configuration) return;
+
     const lgc = async () => {
       const c = await getConfiguration();
       console.log(`Using configuration ${JSON.stringify(c)}`);
       setConfiguration(c);
     };
-    lgc();
-  }, []);
+    // this triggers to async block above. seems weird.
+    // the void is an indicator to lint that we know we're not awaiting the promise.
+    void lgc();
+  }, [configuration]);
 
   useEffect(() => {
     if (!configuration) return;
 
-    const loadBuses = async () => {
-      let data: Entity[];
-      if (!configuration) return undefined;
-
-      if (!configuration.busLocationUri) {
-        console.log("loading bus data from static development source");
-        data = devBusData.entity;
-      } else {
-        console.log(`loading bus data from ${configuration.busLocationUri}`);
-        const response = await axios.get(configuration.busLocationUri);
-        data = response.data.entity;
-      }
-      if (data) {
-        return data.filter((bus) => {
-          const id = yup
-            .string()
-            .required()
-            .validateSync(bus.vehicle.vehicle.label);
-          return configuration.busIds.includes(id);
-        });
-      }
-      return undefined;
-    };
-
-    const scheduler = new SimpleScheduler();
     // use flag to avoid setting state if component unmounts (unlikely)
     let abort = false;
-
-    const cancel = scheduler.scheduleRepeat(
+    const canceller = scheduleRepeat(
       async () => {
-        const buses = await loadBuses();
+        const buses = await loadBuses(configuration);
         if (!abort) {
           console.log(`loaded position data for ${buses?.length} buses`);
           setBuses(buses);
         }
       },
-      configuration.updateInterval * 1000,
-      0
+      {
+        intervalInMillis: configuration.updateInterval * 1000,
+        delayInMillis: 0,
+      }
     );
 
     // cleanup aborts load
     return () => {
-      cancel.cancel();
+      canceller.cancel();
       abort = true;
     };
   }, [configuration]);
@@ -89,10 +61,12 @@ export const App = () => {
   }
 
   return (
-    <div className="App">
-      <h3>Bike Week 2022 Bus Map</h3>
-      <MapLoader configuration={configuration} buses={buses} />
-      <MapFooter configuration={configuration} />
+    <div className="Root">
+      <div className="App">
+        <h1>Bike Week 2022 Bus Map</h1>
+        <MapLoader configuration={configuration} buses={buses} />
+        <MapFooter configuration={configuration} />
+      </div>
     </div>
   );
 };

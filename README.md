@@ -7,12 +7,6 @@ At this time, route data is manually preloaded from http://transitdata.cityofmad
 
 ## Running/Building
 
-You need to include your Google Maps API key in an `.env.production` file like so:
-
-```
-REACT_APP_MAPS_API_KEY=<insert key here>
-```
-
 You also need to supply either `REACT_APP_CONFIGURATION`, which accepts an inline JSON object or `REACT_APP_CONFIGURATION_URI` which takes a relative link to a JSON configuration file. The information in this file is not considered sensitive, so should be placed on your web server next to the app deployment.
 
 Example `REACT_APP_CONFIGURATION_URI` file:

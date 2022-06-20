@@ -2,7 +2,9 @@ name: Build and Test on 'develop'
 
 on:
   push:
-    branches: [develop]
+    branches: ["develop"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build:
@@ -23,3 +25,4 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm run test
+      - run: npm run lint

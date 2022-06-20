@@ -1,84 +1,56 @@
-import { Entity } from "../VehicleTypes";
-import routes from "../data/routes.json";
-import { InfoWindow, Marker } from "@react-google-maps/api";
-
-const lookupRoute = (bus: Entity) => {
-  return routes.find(
-    (value) => value.route_id.toString() === bus.vehicle.trip.route_id
-  );
-};
-
-const lookupRouteLabel = (bus: Entity) => {
-  return lookupRoute(bus)?.route_short_name;
-};
-
-const lookupRouteColor = (bus: Entity) => {
-  const color = lookupRoute(bus)?.route_color;
-  if (!color) return "blue";
-  else return `#${color}`;
-};
-
-const lookupRouteServiceName = (bus: Entity) => {
-  return lookupRoute(bus)?.route_service_name;
-};
+import { Entity } from "../api/Types";
+import { Marker, Popup } from "react-leaflet";
+import { DivIcon } from "leaflet";
+import busImage from "../images/bus.png";
+import { lookupRouteLabel, lookupRouteServiceName } from "../api/Vehicles";
 
 type BusMarkerProps = {
   bus: Entity;
-  selectedBus: Entity | undefined;
-  setSelectedBus: (bus: Entity | undefined) => void;
 };
 
-export const BusMarker = ({
-  bus,
-  selectedBus,
-  setSelectedBus,
-}: BusMarkerProps) => {
-  const busColor = lookupRouteColor(bus);
+export const BusMarker = ({ bus }: BusMarkerProps) => {
+  const bearing = bus.vehicle.position.bearing;
+
+  // bearing 0 is north, the bus icon is oriented facing east by default
+  const transformedBearing = bearing - 90;
+
+  const icon = new DivIcon({
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+    className: "div-icon",
+    html: `<img 
+    id="busicon"
+    style="transform: rotate(${transformedBearing}deg);"
+    height="20"
+    width="20"
+    src="${busImage}">`,
+  });
 
   return (
     <>
-      {bus.id === selectedBus?.id && (
-        <BusInfoWindow bus={bus} setSelectedBus={setSelectedBus} />
-      )}
       <Marker
         position={{
           lat: bus.vehicle.position.latitude,
           lng: bus.vehicle.position.longitude,
         }}
-        icon={{
-          path: "M5,9l1.41,1.41L11,5.83V22H13V5.83l4.59,4.59L19,9l-7-7L5,9z",
-          fillColor: busColor,
-          fillOpacity: 0.9,
-          scaledSize: new google.maps.Size(40, 40),
-          strokeColor: busColor,
-          strokeWeight: 2,
-          anchor: new google.maps.Point(20, 20),
-          rotation: bus.vehicle.position.bearing,
-        }}
-        onClick={() => setSelectedBus(bus)}
-      />
+        icon={icon}
+      >
+        <BusInfoWindow bus={bus} />
+      </Marker>
     </>
   );
 };
 
 type BusInfoWindowProps = {
   bus: Entity;
-  setSelectedBus: (bus: Entity | undefined) => void;
 };
 
-const BusInfoWindow = ({ bus, setSelectedBus }: BusInfoWindowProps) => {
+const BusInfoWindow = ({ bus }: BusInfoWindowProps) => {
   const routeLabel = lookupRouteLabel(bus);
   const routeServiceName = lookupRouteServiceName(bus);
   return (
-    <InfoWindow
-      options={{ pixelOffset: new google.maps.Size(-5, -5) }}
-      position={{
-        lat: bus.vehicle.position.latitude,
-        lng: bus.vehicle.position.longitude,
-      }}
-      onCloseClick={() => setSelectedBus(bus)}
-    >
-      <div>
+    <Popup>
+      <div id="bus-marker">
         {routeLabel && (
           <>
             <b>Route {lookupRouteLabel(bus)}</b>
@@ -93,6 +65,6 @@ const BusInfoWindow = ({ bus, setSelectedBus }: BusInfoWindowProps) => {
           </>
         )}
       </div>
-    </InfoWindow>
+    </Popup>
   );
 };

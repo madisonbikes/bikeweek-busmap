@@ -4,7 +4,7 @@
 
 import { Map } from "./Map";
 import { Configuration } from "../Configuration";
-import { Entity } from "../data/VehicleTypes";
+import { Entity } from "../api/Types";
 
 type Props = {
   configuration: Configuration;

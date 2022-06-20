@@ -1,4 +1,3 @@
-import axios from "axios";
 import * as yup from "yup";
 
 // configurable runtime options
@@ -21,8 +20,11 @@ export const getConfiguration = async (): Promise<Configuration> => {
     const envConfig = JSON.parse(process.env.REACT_APP_CONFIGURATION);
     return configurationSchema.validate(envConfig);
   } else if (process.env.REACT_APP_CONFIGURATION_URL) {
-    const urlConfig = await axios.get(process.env.REACT_APP_CONFIGURATION_URL);
-    return configurationSchema.validate(urlConfig.data);
+    const urlConfig = await fetch(process.env.REACT_APP_CONFIGURATION_URL);
+    if (!urlConfig.ok) {
+      throw Error(`configuration resource not loaded: ${urlConfig.statusText}`);
+    }
+    return configurationSchema.validate(await urlConfig.json());
   } else {
     throw Error(
       "Either REACT_APP_CONFIGURATION or REACT_APP_CONFIGURATION_URL environmnet variable must be defined"

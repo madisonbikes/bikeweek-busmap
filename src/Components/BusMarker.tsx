@@ -1,8 +1,8 @@
-import { Entity } from "../data/VehicleTypes";
+import { Entity } from "../api/Types";
 import { Marker, Popup } from "react-leaflet";
 import { DivIcon } from "leaflet";
 import busImage from "../images/bus.png";
-import { lookupRouteLabel, lookupRouteServiceName } from "../data/Vehicles";
+import { lookupRouteLabel, lookupRouteServiceName } from "../api/Vehicles";
 
 type BusMarkerProps = {
   bus: Entity;

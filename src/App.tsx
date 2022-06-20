@@ -5,19 +5,11 @@
 import "./App.css";
 import { MapLoader } from "./Components/MapLoader";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { Entity } from "./data/VehicleTypes";
+import { Entity } from "./api/Types";
 import { scheduleRepeat } from "./utils/simple_scheduler";
-import devBusData from "./data/test/VehiclePositions.json";
-import * as yup from "yup";
 import { Configuration, getConfiguration } from "./Configuration";
 import { MapFooter } from "./Components/MapFooter";
-
-axios.defaults.headers.common = {
-  "Cache-Control": "no-cache",
-  Pragma: "no-cache",
-  Expires: "0",
-};
+import { loadBuses } from "./api/Vehicles";
 
 export const App = () => {
   const [configuration, setConfiguration] = useState<Configuration | undefined>(
@@ -41,35 +33,11 @@ export const App = () => {
   useEffect(() => {
     if (!configuration) return;
 
-    const loadBuses = async () => {
-      let data: Entity[];
-      if (!configuration) return undefined;
-
-      if (!configuration.busLocationUri) {
-        console.log("loading bus data from static development source");
-        data = devBusData.entity;
-      } else {
-        console.log(`loading bus data from ${configuration.busLocationUri}`);
-        const response = await axios.get(configuration.busLocationUri);
-        data = response.data.entity;
-      }
-      if (data) {
-        return data.filter((bus) => {
-          const id = yup
-            .string()
-            .required()
-            .validateSync(bus.vehicle.vehicle.label);
-          return configuration.busIds.includes(id);
-        });
-      }
-      return undefined;
-    };
-
     // use flag to avoid setting state if component unmounts (unlikely)
     let abort = false;
     const canceller = scheduleRepeat(
       async () => {
-        const buses = await loadBuses();
+        const buses = await loadBuses(configuration);
         if (!abort) {
           console.log(`loaded position data for ${buses?.length} buses`);
           setBuses(buses);

@@ -4,7 +4,7 @@
 
 import { BusMarker } from "./BusMarker";
 import { Configuration } from "../Configuration";
-import { Entity } from "../data/VehicleTypes";
+import { Entity } from "../api/Types";
 import { MapContainer, TileLayer } from "react-leaflet";
 
 type Props = {

@@ -3,7 +3,7 @@
 
 # In addition, it will deploy the built web app to a remote server via SSH.
 
-name: Build and Deploy
+name: Deploy to web server
 on:
   release:
     types: [published]

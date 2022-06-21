@@ -1,8 +1,6 @@
-name: Build and Test on 'develop'
+name: Build and test for PR's to main
 
 on:
-  push:
-    branches: ["develop"]
   pull_request:
     branches: ["main"]
 

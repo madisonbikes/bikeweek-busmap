@@ -1,5 +1,7 @@
-**/*.test.ts
 **/*.css
 **/*.svg
+**/*.json
+**/*.png
 node_modules
 dist
+*.js

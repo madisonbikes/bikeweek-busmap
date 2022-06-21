@@ -3,14 +3,10 @@
 
 # In addition, it will deploy the built web app to a remote server via SSH.
 
-name: Node.js Build and Deploy
-
+name: Build and Deploy
 on:
-  push:
-    branches: [main]
-env:
-  REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
-  REACT_APP_CONFIGURATION_URL: "/busmapConfiguration.json"
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -30,6 +26,10 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: npm run build
+        env:
+          REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+      - run: npm run test
+      - run: npm run lint
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
         env:

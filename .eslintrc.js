@@ -2,6 +2,7 @@
  * Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
  */
 module.exports = {
+  root: true,
   env: {
     commonjs: true,
     es6: true,
@@ -19,11 +20,20 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 6,
+    ecmaFeatures: {
+      jsx: true,
+    },
+    project: "./tsconfig.json",
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "testing-library"],
   settings: {
     react: {
       version: "detect",
     },
+  },
+  reportUnusedDisableDirectives: true,
+  rules: {
+    eqeqeq: ["warn", "smart"],
+    "func-style": ["warn"],
   },
 };

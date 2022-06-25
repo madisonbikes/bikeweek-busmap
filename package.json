@@ -3,6 +3,10 @@
   "version": "v2022",
   "private": true,
   "homepage": "https://madisonbikes.org/bikeweek-buses",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madisonbikes/bikeweek-busmap.git"
+  },
   "dependencies": {
     "leaflet": "^1.8.0",
     "react": "^18.1.0",

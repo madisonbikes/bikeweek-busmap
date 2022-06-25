@@ -3,13 +3,16 @@
 
 # In addition, it will deploy the built web app to a remote server via SSH.
 
-name: Build and Deploy
+name: Deploy
 on:
   release:
     types: [published]
 
 jobs:
   build:
+    # disable deployment until we're back in action in 2023
+    if: ${{ false }}
+
     runs-on: ubuntu-latest
 
     strategy:

@@ -7,8 +7,7 @@
       "bumpMinorPreMajor": false,
       "bumpPatchForMinorPreMajor": false,
       "changelogPath": "CHANGELOG.md",
-      "versioning": "default",
-      "sequential-calls": true
+      "versioning": "default"
     }
   }
 }

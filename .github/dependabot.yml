@@ -6,5 +6,5 @@ updates:
       interval: "monthly"
     target-branch: "main"
     commit-message:
-      prefix: fix
-      prefix-development: chore
+      prefix: "fix"
+      prefix-development: "chore"

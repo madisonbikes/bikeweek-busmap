@@ -10,6 +10,9 @@ on:
 
 jobs:
   build:
+    # disable deployment until we're back in action in 2023
+    if: ${{ false }}
+
     runs-on: ubuntu-latest
 
     strategy:

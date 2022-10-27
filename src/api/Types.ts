@@ -2,58 +2,52 @@
  * Copyright (c) Madison Bikes and Ben Sandee (tbsandee@orangebikelabs.com) 2021.
  */
 
-/** these types were auto-generated using https://quicktype.io/typescript, which was amazing */
-export interface VehicleData {
-  header: Header;
-  entity: Entity[];
-}
+import { z } from "zod";
 
-export interface Entity {
-  id: string;
-  is_deleted: boolean;
-  trip_update: null;
-  vehicle: EntityVehicle;
-  alert: null;
-}
+const entitySchema = z.object({
+  id: z.string(),
+  is_deleted: z.boolean(),
+  trip_update: z.string().nullable(),
+  vehicle: z.object({
+    trip: z.object({
+      trip_id: z.string(),
+      start_time: z.string(),
+      start_date: z.string(),
+      schedule_relationship: z.number(),
+      route_id: z.string(),
+      direction_id: z.number(),
+    }),
+    position: z.object({
+      latitude: z.number(),
+      longitude: z.number(),
+      bearing: z.number(),
+      odometer: z.number(),
+      speed: z.number(),
+    }),
+    current_stop_sequence: z.number(),
+    current_status: z.number(),
+    timestamp: z.number(),
+    congestion_level: z.number(),
+    stop_id: z.string(),
+    vehicle: z.object({
+      id: z.string(),
+      label: z.string(),
+      license_plate: z.string(),
+    }),
+    occupancy_status: z.number(),
+    occupancy_percentage: z.number(),
+  }),
+  alert: z.string().nullable(),
+});
 
-export interface EntityVehicle {
-  trip: Trip;
-  position: Position;
-  current_stop_sequence: number;
-  current_status: number;
-  timestamp: number;
-  congestion_level: number;
-  stop_id: string;
-  vehicle: VehicleVehicle;
-  occupancy_status: number;
-  occupancy_percentage: number;
-}
+export const vehicleDataSchema = z.object({
+  header: z.object({
+    gtfs_realtime_version: z.string(),
+    incrementality: z.number(),
+    timestamp: z.number(),
+  }),
+  entity: entitySchema.array(),
+});
 
-export interface Position {
-  latitude: number;
-  longitude: number;
-  bearing: number;
-  odometer: number;
-  speed: number;
-}
-
-export interface Trip {
-  trip_id: string;
-  start_time: string;
-  start_date: string;
-  schedule_relationship: number;
-  route_id: string;
-  direction_id: number;
-}
-
-export interface VehicleVehicle {
-  id: string;
-  label: string;
-  license_plate: string;
-}
-
-export interface Header {
-  gtfs_realtime_version: string;
-  incrementality: number;
-  timestamp: number;
-}
+export type VehicleData = z.infer<typeof vehicleDataSchema>;
+export type Entity = z.infer<typeof entitySchema>;

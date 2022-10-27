@@ -1,8 +1,8 @@
 import { Configuration } from "../Configuration";
 import routes from "../data/routes.json";
-import { Entity, VehicleData } from "./Types";
+import { Entity, VehicleData, vehicleDataSchema } from "./Types";
 import devBusData from "../data/test/VehiclePositions.json";
-import * as yup from "yup";
+import { z } from "zod";
 
 export const lookupRoute = (bus: Entity) => {
   return routes.find(
@@ -24,17 +24,17 @@ export const lookupRouteServiceName = (bus: Entity) => {
   return lookupRoute(bus)?.route_service_name;
 };
 
-const labelSchema = yup.string().required();
+const labelSchema = z.string();
 
 export const loadBuses = async (
   configuration: Configuration
 ): Promise<Entity[] | undefined> => {
-  let data: Entity[];
+  let data: VehicleData;
   if (!configuration) return undefined;
 
   if (!configuration.busLocationUri) {
     console.log("loading bus data from static development source");
-    data = devBusData.entity;
+    data = vehicleDataSchema.parse(devBusData);
   } else {
     console.log(`loading bus data from ${configuration.busLocationUri}`);
     const response = await fetch(configuration.busLocationUri, {
@@ -43,12 +43,11 @@ export const loadBuses = async (
     if (!response.ok) {
       throw Error(`error loading response: ${response.statusText}`);
     }
-    const jsonResponse: VehicleData = await response.json();
-    data = jsonResponse.entity;
+    data = await vehicleDataSchema.parseAsync(response.json());
   }
   if (data) {
-    return data.filter((value) => {
-      const id = labelSchema.validateSync(value.vehicle.vehicle.label);
+    return data.entity.filter((value) => {
+      const id = labelSchema.parse(value.vehicle.vehicle.label);
       return configuration.busIds.includes(id);
     });
   }

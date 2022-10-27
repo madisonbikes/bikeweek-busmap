@@ -1,30 +1,30 @@
-import * as yup from "yup";
+import { z } from "zod";
 
 // configurable runtime options
-const configurationSchema = yup.object({
-  busIds: yup.array(yup.string().required()).default([]),
-  mapCenter: yup
-    .object({ lat: yup.number().required(), lng: yup.number().required() })
+const configurationSchema = z.object({
+  busIds: z.array(z.string()).default([]),
+  mapCenter: z
+    .object({ lat: z.number(), lng: z.number() })
     .default({ lat: 43.07472052243664, lng: -89.38414963667884 }),
-  updateInterval: yup.number().default(10).required(),
-  initialZoomLevel: yup.number().default(11.7).required(),
+  updateInterval: z.number().default(10),
+  initialZoomLevel: z.number().default(11.7),
 
   // This is should be updated using cron from http://transitdata.cityofmadison.com/Vehicle/VehiclePositions.json
-  busLocationUri: yup.string(),
+  busLocationUri: z.string().optional(),
 });
 
-export type Configuration = yup.InferType<typeof configurationSchema>;
+export type Configuration = z.infer<typeof configurationSchema>;
 
 export const getConfiguration = async (): Promise<Configuration> => {
   if (process.env.REACT_APP_CONFIGURATION) {
     const envConfig = JSON.parse(process.env.REACT_APP_CONFIGURATION);
-    return configurationSchema.validate(envConfig);
+    return configurationSchema.parseAsync(envConfig);
   } else if (process.env.REACT_APP_CONFIGURATION_URL) {
     const urlConfig = await fetch(process.env.REACT_APP_CONFIGURATION_URL);
     if (!urlConfig.ok) {
       throw Error(`configuration resource not loaded: ${urlConfig.statusText}`);
     }
-    return configurationSchema.validate(await urlConfig.json());
+    return configurationSchema.parseAsync(urlConfig.json());
   } else {
     throw Error(
       "Either REACT_APP_CONFIGURATION or REACT_APP_CONFIGURATION_URL environmnet variable must be defined"

@@ -2,8 +2,7 @@
   "extends": "@tsconfig/vite-react/tsconfig.json",
 
   "compilerOptions": {
-    "noFallthroughCasesInSwitch": true,
-    "isolatedModules": true
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["./src"],
   "types": ["vitest/globals"],

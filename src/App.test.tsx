@@ -1,8 +1,11 @@
 import { render, screen } from "@testing-library/react";
+import { describe, expect } from "vitest";
 import { App } from "./App";
 
-test("renders Bike Week text", async () => {
-  render(<App />);
-  const matched = await screen.findByText(/Bike Week/);
-  expect(matched).toBeInTheDocument();
+describe("renders Bike Week text", () => {
+  it("thing", async () => {
+    render(<App />);
+    const matched = await screen.findByText(/Bike Week/);
+    expect(matched).toBeInTheDocument();
+  });
 });

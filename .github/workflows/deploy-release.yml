@@ -30,7 +30,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          REACT_APP_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
+          VITE_MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
       - run: npm run test
       - run: npm run lint
 

@@ -16,18 +16,18 @@ const configurationSchema = z.object({
 export type Configuration = z.infer<typeof configurationSchema>;
 
 export const getConfiguration = async (): Promise<Configuration> => {
-  if (process.env.REACT_APP_CONFIGURATION) {
-    const envConfig = JSON.parse(process.env.REACT_APP_CONFIGURATION);
+  if (import.meta.env.VITE_CONFIGURATION) {
+    const envConfig = JSON.parse(import.meta.env.VITE_CONFIGURATION);
     return configurationSchema.parseAsync(envConfig);
-  } else if (process.env.REACT_APP_CONFIGURATION_URL) {
-    const urlConfig = await fetch(process.env.REACT_APP_CONFIGURATION_URL);
+  } else if (import.meta.env.VITE_CONFIGURATION_URL) {
+    const urlConfig = await fetch(import.meta.env.VITE_CONFIGURATION_URL);
     if (!urlConfig.ok) {
       throw Error(`configuration resource not loaded: ${urlConfig.statusText}`);
     }
     return configurationSchema.parseAsync(urlConfig.json());
   } else {
     throw Error(
-      "Either REACT_APP_CONFIGURATION or REACT_APP_CONFIGURATION_URL environmnet variable must be defined"
+      "Either VITE_CONFIGURATION or VITE_CONFIGURATION_URL environmnet variable must be defined"
     );
   }
 };

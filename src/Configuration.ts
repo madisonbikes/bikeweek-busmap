@@ -27,7 +27,7 @@ export const getConfiguration = async (): Promise<Configuration> => {
     return configurationSchema.parseAsync(urlConfig.json());
   } else {
     throw Error(
-      "Either VITE_CONFIGURATION or VITE_CONFIGURATION_URL environmnet variable must be defined"
+      "Either VITE_CONFIGURATION or VITE_CONFIGURATION_URL environment variable must be defined"
     );
   }
 };

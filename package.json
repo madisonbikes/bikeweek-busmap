@@ -45,7 +45,7 @@
     "vite": "^4.3.9",
     "vite-plugin-eslint": "^1.8.1",
     "vitest": "^0.31.3",
-    "zod": "^3.21.4"
+    "zod": "^3.22.4"
   },
   "browserslist": {
     "production": [

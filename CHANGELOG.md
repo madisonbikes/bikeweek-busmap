@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1-alpha](https://github.com/madisonbikes/bikeweek-busmap/compare/bikeweek-busmap-v0.3.0...bikeweek-busmap-v0.3.1-alpha) (2024-03-16)
+
+
+### Bug Fixes
+
+* force release note/release for release-please ([85bc1b6](https://github.com/madisonbikes/bikeweek-busmap/commit/85bc1b6e9b1edae22c0316a90e66125f1eab1688))
+
 ## 0.3.0 (2024-03-16)
 
 ### Features

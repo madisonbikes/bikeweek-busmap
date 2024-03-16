@@ -7,7 +7,7 @@ At this time, route data is manually preloaded from [http://transitdata.cityofma
 
 ## Releasing
 
-Releases will start at 0.3 moving forward. 0.2 was used for 2022 bike week. 0.3 will likely be used for 2023.
+Release 1.0 for 2024 Bike Week.
 
 ## Running/Building
 

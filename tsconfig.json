@@ -4,7 +4,7 @@
   "compilerOptions": {
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["./src"],
+  "include": ["."],
   "types": ["vitest/globals"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

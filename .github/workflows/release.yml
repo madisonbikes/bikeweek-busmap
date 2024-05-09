@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+# Only allow one instance of this workflow to run at a time, per branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
   pull-requests: write
